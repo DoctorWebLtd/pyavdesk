@@ -2,8 +2,8 @@ Dr.Web pyavdesk
 ===============
 
 Dr.Web pyavdesk (python-avdesk) is a Python module, wrapping Dr.Web dwavdapi C library to introduce 
-simple yet powerful interface to manipulatate Dr.Web AV-Desk server resources from within your 
-Python code, making integration of thirdparty applications with AV-Desk as easy as possible.
+simple yet powerful interface to manipulate Dr.Web AV-Desk server resources from within your
+Python code, making integration of third-party applications with AV-Desk as easy as possible.
 
 Internally pyavdesk uses `dwavdapi` library to make a dialog with AV-Desk server through its XML API.
 
@@ -27,10 +27,10 @@ use `make <build_format_name>` in `docs/` directory to build documentation from 
 Copyright
 ---------
 
-Copyright (c) Doctor Web, Ltd., 2003-2013
+Copyright (c) 2003-2013, Doctor Web, Ltd.
 
-Dr.Web pyavdesk is distributed under license available from LICENSE file shipped
-with this distribution package.
+Dr.Web pyavdesk is distributed under the license available from LICENSE file provided
+with the source code.
 
 
 --

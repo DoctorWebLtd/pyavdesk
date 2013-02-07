@@ -1,8 +1,11 @@
 ###
 #
-# Copyright (c) Doctor Web, Ltd., 2003-2012
+# Copyright (c) 2003-2013, Doctor Web, Ltd.
 #
 # Following code is the property of Doctor Web, Ltd.
+# Distributed under the license available from LICENSE file provided
+# with the source code.
+#
 # Dr.Web is a registered trademark of Doctor Web, Ltd.
 #
 # http://www.drweb.com

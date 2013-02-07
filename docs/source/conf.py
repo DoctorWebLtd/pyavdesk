@@ -42,7 +42,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Dr.Web pyavdesk'
-copyright = u'2011-2013, Doctor Web, Ltd.'
+copyright = u'2003-2013, Doctor Web, Ltd.'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
