@@ -14,7 +14,8 @@ Requirements
 ------------
 
 * Python 2.6+
-* Dr.Web *dwavdapi* library
+* Dr.Web AV-Desk (http://ru.av-desk.com/support/demo/?lng=en)
+* Dr.Web *dwavdapi* library (http://download.geo.drweb.com/pub/drweb/avd/libs/libdwavdapi/)
 * Python setuptools (to install pyavdesk package using setup.py)
 
 
