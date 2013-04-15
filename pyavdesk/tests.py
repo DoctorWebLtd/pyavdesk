@@ -944,9 +944,16 @@ class AVDeskStationCheck(unittest.TestCase):
 
         self.obj.create()
         blocking = self.obj.get_block_time()
-        self.obj.delete()
         self.assertEqual(blocking[0], 1234567)
         self.assertEqual(blocking[1], 7654321)
+
+        self.obj.set_block_time(0, 0)
+        self.obj.update()
+        blocking = self.obj.get_block_time()
+        self.assertEqual(blocking[0], 0)
+        self.assertEqual(blocking[1], 0)
+
+        self.obj.delete()
 
     def test_groups(self):
         self.assertEquals(self.obj.get_groups() >= 0, True)
