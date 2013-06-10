@@ -460,7 +460,7 @@ class AVDeskGroupCheck(unittest.TestCase):
 
     def test_send_message(self):
         self.assertFalse(self.obj.send_message('Message to nowhere.'))
-        
+
         self.obj.name = self.title
         self.obj.create()
         self.assertTrue(self.obj.send_message('This is a test message from pyavdesk to a group.'))
@@ -950,8 +950,14 @@ class AVDeskStationCheck(unittest.TestCase):
         self.obj.set_block_time(0, 0)
         self.obj.update()
         blocking = self.obj.get_block_time()
-        self.assertEqual(blocking[0], 0)
-        self.assertEqual(blocking[1], 0)
+        self.assertGreater(blocking[0], 0)
+        self.assertGreater(blocking[1], 0)
+
+        self.obj.set_block_time(None, None)
+        self.obj.update()
+        blocking = self.obj.get_block_time()
+        self.assertEqual(blocking[0], None)
+        self.assertEqual(blocking[1], None)
 
         self.obj.delete()
 
