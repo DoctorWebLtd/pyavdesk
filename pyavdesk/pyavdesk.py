@@ -98,6 +98,8 @@ HISTORY_EVENT_TYPES = {
 # Uinitialized fields values constants used by dwavdapi.
 VAR_UINITIALIZED_NUM = -200
 VAR_UINITIALIZED_STR = None
+# Library constant to reset numeric values.
+VAR_RESET = -100
 
 def library_version_satisfied():
     """Tests whether version of dwavdapi library found in the system
@@ -1901,6 +1903,8 @@ class AVDeskStation(_AVDeskCommon, _AVDeskGroupable, _AVDeskShared):
         return expires
 
     def set_expires_time(self, at):
+        if at is None:
+           at = VAR_RESET
         self._api_call('set_expires_time', (self._get_handle(), time_t(at)))
         return True
 
@@ -2199,6 +2203,10 @@ class AVDeskStation(_AVDeskCommon, _AVDeskGroupable, _AVDeskShared):
             station.set_block_time(start_at, finish_at)
 
         """
+        if begin_at is None:
+           begin_at = VAR_RESET
+        if finish_at is None:
+           finish_at = VAR_RESET
         self._api_call('set_block_time', (self._get_handle(), time_t(begin_at), time_t(finish_at)))
         return True
 
