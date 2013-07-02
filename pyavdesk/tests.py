@@ -30,9 +30,9 @@ AVDESK = pyavdesk.AVDeskServer('testmaster', 'password', 'http://192.168.10.116'
 TEST_GROUP_ID = 'test_grp'
 TEST_STATION_ID = 'test_av'
 
-#AVDESK.switch_to_debug_mode()
-#import logging
-#pyavdesk.set_log_level(logging.DEBUG)
+# AVDESK.switch_to_debug_mode()
+# import logging
+# pyavdesk.set_log_level(logging.DEBUG)
 
 
 def get_microtime():
@@ -83,13 +83,13 @@ class CommonFunctionsCheck(unittest.TestCase):
 class AVDeskServerCheck(unittest.TestCase):
 
     def test_handle(self):
-        self.assertEquals(AVDESK._handle is None, False)
+        self.assertEqual(AVDESK._handle is None, False)
 
     def test_verify_connection_certificate(self):
-        self.assertEquals(AVDESK.verify_connection_certificate(True) is None, True)
-        self.assertEquals(AVDESK.verify_connection_certificate(False) is None, True)
+        self.assertEqual(AVDESK.verify_connection_certificate(True) is None, True)
+        self.assertEqual(AVDESK.verify_connection_certificate(False) is None, True)
         self.assertRaises(pyavdesk.AVDeskError, AVDESK.verify_connection_certificate, True, certificate_path='no-such-path')
-        self.assertEquals(AVDESK.verify_connection_certificate(True, path.abspath(__file__)) is None, True)
+        self.assertEqual(AVDESK.verify_connection_certificate(True, path.abspath(__file__)) is None, True)
 
     def test_debug_mode(self):
         self.assertTrue(AVDESK.switch_to_debug_mode())
@@ -99,7 +99,7 @@ class AVDeskServerCheck(unittest.TestCase):
 
     def test_run_task(self):
         self.assertRaises(pyavdesk.AVDeskServerError, AVDESK.run_task, 'nonexistent_task')
-        self.assertEquals(AVDESK.run_task('scc_unknown_stations'), True)
+        self.assertEqual(AVDESK.run_task('scc_unknown_stations'), True)
 
     def test_resource_name(self):
         self.assertEqual(AVDESK._resource_name, 'srv')
@@ -109,33 +109,33 @@ class AVDeskServerCheck(unittest.TestCase):
 
     def test_server_info(self):
         info = AVDESK.get_info()
-        self.assertEquals(isinstance(info, dict), True)
-        self.assertEquals(isinstance(info['uuid'], str), True)
-        self.assertEquals(isinstance(info['uptime'], long), True)
+        self.assertEqual(isinstance(info, dict), True)
+        self.assertEqual(isinstance(info['uuid'], str), True)
+        self.assertEqual(isinstance(info['uptime'], long), True)
 
     def test_key_info(self):
         info = AVDESK.get_key_info()
-        self.assertEquals(isinstance(info, dict), True)
-        self.assertEquals(isinstance(info['uuid'], str), True)
-        self.assertEquals(isinstance(info['user'], long), True)
+        self.assertEqual(isinstance(info, dict), True)
+        self.assertEqual(isinstance(info['uuid'], str), True)
+        self.assertEqual(isinstance(info['user'], long), True)
 
     def test_statistics(self):
         info = AVDESK.get_statistics()
-        self.assertEquals(isinstance(info, dict), True)
-        self.assertEquals(isinstance(info['groups_total'], long), True)
+        self.assertEqual(isinstance(info, dict), True)
+        self.assertEqual(isinstance(info['groups_total'], long), True)
 
     def test_init_group_new(self):
         group = AVDESK.new_group('Test pyavdesk group')
-        self.assertEquals(isinstance(group, pyavdesk.AVDeskGroup), True)
+        self.assertEqual(isinstance(group, pyavdesk.AVDeskGroup), True)
 
     def test_new_group_with_parent(self):
         parent_group = AVDESK.new_group('Test pyavdesk parent group')
-        self.assertEquals(isinstance(parent_group, pyavdesk.AVDeskGroup), True)
+        self.assertEqual(isinstance(parent_group, pyavdesk.AVDeskGroup), True)
         parent_group.save()
-        self.assertEquals(parent_group.id is None, False)
+        self.assertEqual(parent_group.id is None, False)
 
         group = AVDESK.new_group('Test pyavdesk group', parent_group=parent_group)
-        self.assertEquals(isinstance(group, pyavdesk.AVDeskGroup), True)
+        self.assertEqual(isinstance(group, pyavdesk.AVDeskGroup), True)
         group.save()
         self.assertEqual(group.parent, parent_group.id)
         
@@ -144,16 +144,16 @@ class AVDeskServerCheck(unittest.TestCase):
 
     def test_init_tariff_new(self):
         tariff = AVDESK.new_tariff('Test pyavdesk tariff')
-        self.assertEquals(isinstance(tariff, pyavdesk.AVDeskTariff), True)
+        self.assertEqual(isinstance(tariff, pyavdesk.AVDeskTariff), True)
 
     def test_new_tariff_with_parent(self):
         parent_tariff = AVDESK.new_tariff('Test pyavdesk parent tariff')
-        self.assertEquals(isinstance(parent_tariff, pyavdesk.AVDeskTariff), True)
+        self.assertEqual(isinstance(parent_tariff, pyavdesk.AVDeskTariff), True)
         parent_tariff.save()
-        self.assertEquals(parent_tariff.id is None, False)
+        self.assertEqual(parent_tariff.id is None, False)
 
         tariff = AVDESK.new_tariff('Test pyavdesk tariff', parent_tariff=parent_tariff)
-        self.assertEquals(isinstance(tariff, pyavdesk.AVDeskTariff), True)
+        self.assertEqual(isinstance(tariff, pyavdesk.AVDeskTariff), True)
         tariff.save()
         self.assertEqual(tariff.parent, parent_tariff.id)
 
@@ -162,21 +162,21 @@ class AVDeskServerCheck(unittest.TestCase):
 
     def test_init_station_new(self):
         station = AVDESK.new_station()
-        self.assertEquals(isinstance(station, pyavdesk.AVDeskStation), True)
+        self.assertEqual(isinstance(station, pyavdesk.AVDeskStation), True)
 
     def test_new_station_with_parents(self):
         tariff = AVDESK.new_tariff('Test pyavdesk tariff')
-        self.assertEquals(isinstance(tariff, pyavdesk.AVDeskTariff), True)
+        self.assertEqual(isinstance(tariff, pyavdesk.AVDeskTariff), True)
         tariff.save()
-        self.assertEquals(tariff.id is None, False)
+        self.assertEqual(tariff.id is None, False)
 
         parent_group = AVDESK.new_group('Test pyavdesk parent group')
-        self.assertEquals(isinstance(parent_group, pyavdesk.AVDeskGroup), True)
+        self.assertEqual(isinstance(parent_group, pyavdesk.AVDeskGroup), True)
         parent_group.save()
-        self.assertEquals(parent_group.id is None, False)
+        self.assertEqual(parent_group.id is None, False)
 
         station = AVDESK.new_station(parent_group=parent_group, tariff=tariff)
-        self.assertEquals(isinstance(station, pyavdesk.AVDeskStation), True)
+        self.assertEqual(isinstance(station, pyavdesk.AVDeskStation), True)
         station.save()
         self.assertEqual(station.tariff, tariff.id)
         self.assertEqual(parent_group.id, station.parent)
@@ -187,21 +187,21 @@ class AVDeskServerCheck(unittest.TestCase):
 
     def test_get_groups(self):
         groups = AVDESK.get_groups()
-        self.assertEquals(isinstance(groups, list), True)
+        self.assertEqual(isinstance(groups, list), True)
         count = len(groups)
-        self.assertEquals(count >= 0, True)
+        self.assertEqual(count >= 0, True)
         if count > 0 :
-            self.assertEquals(isinstance(groups[0].get_id(), str), True)
-            self.assertEquals(isinstance(groups[0].get_name(), str), True)
+            self.assertEqual(isinstance(groups[0].get_id(), str), True)
+            self.assertEqual(isinstance(groups[0].get_name(), str), True)
 
     def test_get_repositories(self):
         repositories = AVDESK.get_repositories()
-        self.assertEquals(isinstance(repositories, list), True)
+        self.assertEqual(isinstance(repositories, list), True)
         count = len(repositories)
-        self.assertEquals(count >= 0, True)
-        self.assertEquals(isinstance(repositories[0], dict), True)
-        self.assertEquals(isinstance(repositories[0]['name'], str), True)
-        self.assertEquals(isinstance(repositories[0]['code'], str), True)
+        self.assertEqual(count >= 0, True)
+        self.assertEqual(isinstance(repositories[0], dict), True)
+        self.assertEqual(isinstance(repositories[0]['name'], str), True)
+        self.assertEqual(isinstance(repositories[0]['code'], str), True)
 
 
 class AVDeskGroupTariffCheck(unittest.TestCase):
@@ -233,8 +233,8 @@ class AVDeskGroupTariffCheck(unittest.TestCase):
     def test_get_av_components(self):
         basic_tariff = pyavdesk.AVDeskTariff(AVDESK, pyavdesk.TARIFF_IDS['CLASSIC'])
         components = basic_tariff.get_av_components()
-        self.assertEquals(isinstance(components, list), True)
-        self.assertEquals(isinstance(components[0], dict), True)
+        self.assertEqual(isinstance(components, list), True)
+        self.assertEqual(isinstance(components[0], dict), True)
 
     def test_add_station(self):
         station = AVDESK.new_station()
@@ -267,7 +267,7 @@ class AVDeskGroupTariffCheck(unittest.TestCase):
         self.assertTrue(deleted)
 
     def test_handle(self):
-        self.assertEquals(self.obj._handle is None, False)
+        self.assertEqual(self.obj._handle is None, False)
 
     def test_resource_name(self):
         self.assertEqual(self.obj._resource_name, 'group')
@@ -282,8 +282,8 @@ class AVDeskGroupTariffCheck(unittest.TestCase):
         self.assertRaises(NotImplementedError, self.obj.send_message)
 
     def test_get_time_created_modified(self):
-        self.assertEquals(self.obj.get_time_created()is None, True)
-        self.assertEquals(self.obj.get_time_modified() is None, True)
+        self.assertEqual(self.obj.get_time_created()is None, True)
+        self.assertEqual(self.obj.get_time_modified() is None, True)
 
         self.obj.name = self.title
         self.obj.description = self.descr
@@ -291,12 +291,12 @@ class AVDeskGroupTariffCheck(unittest.TestCase):
         created = self.obj.get_time_created()
         modified = self.obj.get_time_modified()
         self.obj.delete()
-        self.assertEquals(created is None, False)
-        self.assertEquals(modified is None, False)
+        self.assertEqual(created is None, False)
+        self.assertEqual(modified is None, False)
 
     def test_parent_set_get(self):
-        self.assertEquals(self.obj.get_parent() is None, True)
-        self.assertEquals(self.obj.get_parent(False) is None, True)
+        self.assertEqual(self.obj.get_parent() is None, True)
+        self.assertEqual(self.obj.get_parent(False) is None, True)
 
         new_parent_group = pyavdesk.AVDeskTariff(AVDESK)
         new_parent_group.name = self.title
@@ -316,7 +316,7 @@ class AVDeskGroupTariffCheck(unittest.TestCase):
         result = self.obj.create()
 
         self.assertEqual(result, True)
-        self.assertEquals(self.obj.id is None, False)
+        self.assertEqual(self.obj.id is None, False)
         self.assertEqual(self.obj.name,  self.title)
 
         new_description = self.descr_alt
@@ -333,24 +333,24 @@ class AVDeskGroupTariffCheck(unittest.TestCase):
         self.assertEqual(self.obj.get_id(), 'test_tariff_group')
 
     def test_get_id(self):
-        self.assertEquals(self.obj.get_id() is None, True)
+        self.assertEqual(self.obj.get_id() is None, True)
 
     def test_set_name(self):
         self.obj.set_name('test_tariff_name')
         self.assertEqual(self.obj.get_name(), 'test_tariff_name')
 
     def test_get_name(self):
-        self.assertEquals(self.obj.get_name() is None, True)
+        self.assertEqual(self.obj.get_name() is None, True)
 
     def test_set_description(self):
         self.obj.set_description('test_tariff_descr')
         self.assertEqual(self.obj.get_description(), 'test_tariff_descr')
 
     def test_get_description(self):
-        self.assertEquals(self.obj.get_description() is None, True)
+        self.assertEqual(self.obj.get_description() is None, True)
 
     def test_grace_period_set_get(self):
-        self.assertEquals(self.obj.get_grace_period() is None, True)
+        self.assertEqual(self.obj.get_grace_period() is None, True)
         self.obj.name = self.title
         self.obj.grace_period = 10
         self.obj.create()
@@ -409,7 +409,7 @@ class AVDeskGroupCheck(unittest.TestCase):
         self.obj.delete()
 
         self.assertTrue(len(station_groups)==1)
-        self.assertEquals(group_id in station_groups, True)
+        self.assertEqual(group_id in station_groups, True)
 
     def test_save(self):
         self.obj.name = self.title
@@ -429,7 +429,7 @@ class AVDeskGroupCheck(unittest.TestCase):
         self.assertTrue(deleted)
 
     def test_handle(self):
-        self.assertEquals(self.obj._handle is None, False)
+        self.assertEqual(self.obj._handle is None, False)
 
     def test_resource_name(self):
         self.assertEqual(self.obj._resource_name, 'group')
@@ -438,24 +438,24 @@ class AVDeskGroupCheck(unittest.TestCase):
         self.assertEqual(self.obj._connector, AVDESK)
 
     def test_get_children(self):
-        self.assertEquals(self.obj.get_subgroups() >= 0, True)
+        self.assertEqual(self.obj.get_subgroups() >= 0, True)
 
     def test_get_stations(self):
-        self.assertEquals(self.obj.get_stations() >= 0, True)
+        self.assertEqual(self.obj.get_stations() >= 0, True)
 
     def test_get_id(self):
-        self.assertEquals(self.obj.get_id() is None, True)
+        self.assertEqual(self.obj.get_id() is None, True)
 
     def test_get_name(self):
-        self.assertEquals(self.obj.get_name() is None, True)
+        self.assertEqual(self.obj.get_name() is None, True)
 
     def test_statistics(self):
-        self.assertEquals(self.obj.get_statistics() is None, True)
+        self.assertEqual(self.obj.get_statistics() is None, True)
 
         self.obj.name = self.title
         self.obj.create()
         stats = self.obj.get_statistics()
-        self.assertEquals(isinstance(stats, dict), True)
+        self.assertEqual(isinstance(stats, dict), True)
         self.obj.delete()
 
     def test_send_message(self):
@@ -467,8 +467,8 @@ class AVDeskGroupCheck(unittest.TestCase):
         self.obj.delete()
 
     def test_get_time_created_modified(self):
-        self.assertEquals(self.obj.get_time_created() is None, True)
-        self.assertEquals(self.obj.get_time_modified() is None, True)
+        self.assertEqual(self.obj.get_time_created() is None, True)
+        self.assertEqual(self.obj.get_time_modified() is None, True)
 
         self.obj.name = self.title
         self.obj.description = self.descr
@@ -476,22 +476,22 @@ class AVDeskGroupCheck(unittest.TestCase):
         created = self.obj.get_time_created()
         modified = self.obj.get_time_modified()
         self.obj.delete()
-        self.assertEquals(created is None, False)
-        self.assertEquals(modified is None, False)
+        self.assertEqual(created is None, False)
+        self.assertEqual(modified is None, False)
 
     def test_get_key(self):
-        self.assertEquals(self.obj.get_key() is None, True)
+        self.assertEqual(self.obj.get_key() is None, True)
 
         test_group = AVDESK.get_group(TEST_GROUP_ID)
         key = test_group.get_key()
-        self.assertEquals(key is None, False)
-        self.assertEquals(key['inherited_group_id'] is None, False)
-        self.assertEquals(key['key'] is None, False)
+        self.assertEqual(key is None, False)
+        self.assertEqual(key['inherited_group_id'] is None, False)
+        self.assertEqual(key['key'] is None, False)
         self.assertEqual(key['key'][0], '=')
 
     def test_parent_set_get(self):
-        self.assertEquals(self.obj.get_parent() is None, True)
-        self.assertEquals(self.obj.get_parent(False) is None, True)
+        self.assertEqual(self.obj.get_parent() is None, True)
+        self.assertEqual(self.obj.get_parent(False) is None, True)
 
         new_parent_group = pyavdesk.AVDeskGroup(AVDESK)
         new_parent_group.name = self.title
@@ -514,7 +514,7 @@ class AVDeskGroupCheck(unittest.TestCase):
         self.assertEqual(self.obj.get_name(), 'test_group_name')
 
     def test_description_get_set(self):
-        self.assertEquals(self.obj.get_description() is None, True)
+        self.assertEqual(self.obj.get_description() is None, True)
         self.obj.set_description('test_group_descr')
         self.assertEqual(self.obj.get_description(), 'test_group_descr')
 
@@ -524,7 +524,7 @@ class AVDeskGroupCheck(unittest.TestCase):
         result = self.obj.create()
 
         self.assertEqual(result, True)
-        self.assertEquals(self.obj.id is None, False)
+        self.assertEqual(self.obj.id is None, False)
         self.assertEqual(self.obj.name,  self.title)
 
         new_description = self.descr_alt
@@ -560,7 +560,7 @@ class AVDeskStationCheck(unittest.TestCase):
 
     def test_get_av_components(self):
         components = self.obj.get_av_components()
-        self.assertEquals(isinstance(components, list), True)
+        self.assertEqual(isinstance(components, list), True)
         self.assertEqual(len(components), 0)
 
         self.obj.name = self.title
@@ -568,13 +568,13 @@ class AVDeskStationCheck(unittest.TestCase):
         components = self.obj.get_av_components()
         self.obj.delete()
 
-        self.assertEquals(isinstance(components, list), True)
-        self.assertEquals(len(components) > 0, True)
-        self.assertEquals(isinstance(components[0], dict), True)
+        self.assertEqual(isinstance(components, list), True)
+        self.assertEqual(len(components) > 0, True)
+        self.assertEqual(isinstance(components[0], dict), True)
 
     def test_get_av_modules(self):
         modules = self.obj.get_av_modules()
-        self.assertEquals(isinstance(modules, list), True)
+        self.assertEqual(isinstance(modules, list), True)
         self.assertEqual(len(modules), 0)
 
         self.obj.name = self.title
@@ -582,12 +582,12 @@ class AVDeskStationCheck(unittest.TestCase):
         modules = self.obj.get_av_modules()
         self.obj.delete()
 
-        self.assertEquals(isinstance(modules, list), True)
+        self.assertEqual(isinstance(modules, list), True)
         self.assertEqual(len(modules), 0)
 
     def test_get_av_components_installed(self):
         components = self.obj.get_av_components_installed()
-        self.assertEquals(isinstance(components, list), True)
+        self.assertEqual(isinstance(components, list), True)
         self.assertEqual(len(components), 0)
 
         self.obj.name = self.title
@@ -595,12 +595,12 @@ class AVDeskStationCheck(unittest.TestCase):
         components = self.obj.get_av_components_installed()
         self.obj.delete()
 
-        self.assertEquals(isinstance(components, list), True)
+        self.assertEqual(isinstance(components, list), True)
         self.assertEqual(len(components), 0)
 
     def test_get_av_components_running(self):
         components = self.obj.get_av_components_running()
-        self.assertEquals(isinstance(components, list), True)
+        self.assertEqual(isinstance(components, list), True)
         self.assertEqual(len(components), 0)
 
         self.obj.name = self.title
@@ -608,7 +608,7 @@ class AVDeskStationCheck(unittest.TestCase):
         components = self.obj.get_av_components_running()
         self.obj.delete()
 
-        self.assertEquals(isinstance(components, list), True)
+        self.assertEqual(isinstance(components, list), True)
         self.assertEqual(len(components), 0)
 
     def test_get_av_bases(self):
@@ -622,9 +622,9 @@ class AVDeskStationCheck(unittest.TestCase):
             pass
         else:
             bases = station.get_av_bases()
-            self.assertEquals(isinstance(bases, list), True)
+            self.assertEqual(isinstance(bases, list), True)
             if 0 in bases:
-                self.assertEquals(isinstance(bases[0], dict), True)
+                self.assertEqual(isinstance(bases[0], dict), True)
 
     def test_get_av_packages(self):
         self.obj.name = self.title
@@ -638,9 +638,9 @@ class AVDeskStationCheck(unittest.TestCase):
             pass
         else:
             packages = station.get_av_packages()
-            self.assertEquals(isinstance(packages, list), True)
+            self.assertEqual(isinstance(packages, list), True)
             if 0 in packages:
-                self.assertEquals(isinstance(packages[0], dict), True)
+                self.assertEqual(isinstance(packages[0], dict), True)
 
     def test_get_history(self):
         self.assertEqual(self.obj.get_history(), [])
@@ -651,8 +651,8 @@ class AVDeskStationCheck(unittest.TestCase):
             pass
         else:
             history = station.get_history()
-            self.assertEquals(isinstance(history, list), True)
-            self.assertEquals(isinstance(history[0], dict), True)
+            self.assertEqual(isinstance(history, list), True)
+            self.assertEqual(isinstance(history[0], dict), True)
 
     def test_save(self):
         self.obj.name = self.title
@@ -672,7 +672,7 @@ class AVDeskStationCheck(unittest.TestCase):
         self.assertTrue(deleted)
 
     def test_handle(self):
-        self.assertEquals(self.obj._handle is None, False)
+        self.assertEqual(self.obj._handle is None, False)
 
     def test_resource_name(self):
         self.assertEqual(self.obj._resource_name, 'station')
@@ -689,8 +689,8 @@ class AVDeskStationCheck(unittest.TestCase):
         self.obj.delete()
 
     def test_get_time_created_modified(self):
-        self.assertEquals(self.obj.get_time_created() is None, True)
-        self.assertEquals(self.obj.get_time_modified() is None, True)
+        self.assertEqual(self.obj.get_time_created() is None, True)
+        self.assertEqual(self.obj.get_time_modified() is None, True)
 
         self.obj.name = self.title
         self.obj.description = self.descr
@@ -698,22 +698,22 @@ class AVDeskStationCheck(unittest.TestCase):
         created = self.obj.get_time_created()
         modified = self.obj.get_time_modified()
         self.obj.delete()
-        self.assertEquals(created is None, False)
-        self.assertEquals(modified is None, False)
+        self.assertEqual(created is None, False)
+        self.assertEqual(modified is None, False)
 
     def test_get_key(self):
-        self.assertEquals(self.obj.get_key() is None, True)
+        self.assertEqual(self.obj.get_key() is None, True)
 
         test_station = AVDESK.get_station(TEST_STATION_ID)
         key = test_station.get_key()
-        self.assertEquals(key is None, False)
-        self.assertEquals(key['inherited_group_id'] is None, False)
-        self.assertEquals(key['key'] is None, False)
+        self.assertEqual(key is None, False)
+        self.assertEqual(key['inherited_group_id'] is None, False)
+        self.assertEqual(key['key'] is None, False)
         self.assertEqual(key['key'][0], '=')
 
     def test_parent_set_get(self):
-        self.assertEquals(self.obj.get_parent() is None, True)
-        self.assertEquals(self.obj.get_parent(False) is None, True)
+        self.assertEqual(self.obj.get_parent() is None, True)
+        self.assertEqual(self.obj.get_parent(False) is None, True)
 
         new_parent_group = pyavdesk.AVDeskGroup(AVDESK)
         new_parent_group.name = self.title
@@ -733,7 +733,7 @@ class AVDeskStationCheck(unittest.TestCase):
         result = self.obj.create()
 
         self.assertEqual(result, True)
-        self.assertEquals(self.obj.id is None, False)
+        self.assertEqual(self.obj.id is None, False)
         self.assertEqual(self.obj.name,  self.title)
 
         new_description = self.descr_alt
@@ -763,33 +763,33 @@ class AVDeskStationCheck(unittest.TestCase):
         self.assertEqual(self.obj.get_id(), 'test_station')
 
     def test_get_id(self):
-        self.assertEquals(self.obj.get_id() is None, True)
+        self.assertEqual(self.obj.get_id() is None, True)
 
     def test_set_name(self):
         self.obj.set_name('test_station_name')
         self.assertEqual(self.obj.get_name(), 'test_station_name')
 
     def test_get_name(self):
-        self.assertEquals(self.obj.get_name() is None, True)
+        self.assertEqual(self.obj.get_name() is None, True)
 
     def test_set_description(self):
         self.obj.set_description('test_station_descr')
         self.assertEqual(self.obj.get_description(), 'test_station_descr')
 
     def test_get_description(self):
-        self.assertEquals(self.obj.get_description() is None, True)
+        self.assertEqual(self.obj.get_description() is None, True)
 
     def test_statistics(self):
-        self.assertEquals(self.obj.get_statistics() is None, True)
+        self.assertEqual(self.obj.get_statistics() is None, True)
 
         self.obj.name = self.title
         self.obj.create()
         stats = self.obj.get_statistics()
-        self.assertEquals(isinstance(stats, dict), True)
+        self.assertEqual(isinstance(stats, dict), True)
         self.obj.delete()
 
     def test_place_data(self):
-        self.assertEquals(isinstance(self.obj.get_place_data(), dict), True)
+        self.assertEqual(isinstance(self.obj.get_place_data(), dict), True)
 
         self.obj.name = self.title
         args = {
@@ -821,8 +821,8 @@ class AVDeskStationCheck(unittest.TestCase):
         os = self.obj.get_os()
         self.obj.delete()
 
-        self.assertEquals(os is None, False)
-        self.assertEquals(isinstance(os, str), True)
+        self.assertEqual(os is None, False)
+        self.assertEqual(isinstance(os, str), True)
 
     def test_get_state(self):
         self.assertEqual(self.obj.get_state(), '<unknown>')
@@ -834,35 +834,35 @@ class AVDeskStationCheck(unittest.TestCase):
         state_id = self.obj.get_state(True)
         self.obj.delete()
 
-        self.assertEquals(state is None, False)
-        self.assertEquals(state_id is None, False)
-        self.assertEquals(isinstance(state, str), True)
-        self.assertEquals(isinstance(state_id, int), True)
+        self.assertEqual(state is None, False)
+        self.assertEqual(state_id is None, False)
+        self.assertEqual(isinstance(state, str), True)
+        self.assertEqual(isinstance(state_id, int), True)
 
     def test_get_download_url(self):
-        self.assertEquals(self.obj.get_download_url() is None, True)
+        self.assertEqual(self.obj.get_download_url() is None, True)
 
         self.obj.name = self.title
         self.obj.create()
         url = self.obj.get_download_url()
         self.obj.delete()
 
-        self.assertEquals(url is None, False)
-        self.assertEquals(isinstance(url, str), True)
+        self.assertEqual(url is None, False)
+        self.assertEqual(isinstance(url, str), True)
 
     def test_get_config_url(self):
-        self.assertEquals(self.obj.get_config_url() is None, True)
+        self.assertEqual(self.obj.get_config_url() is None, True)
 
         self.obj.name = self.title
         self.obj.create()
         url = self.obj.get_config_url()
         self.obj.delete()
 
-        self.assertEquals(url is None, False)
-        self.assertEquals(isinstance(url, str), True)
+        self.assertEqual(url is None, False)
+        self.assertEqual(isinstance(url, str), True)
 
     def test_password_get_set(self):
-        self.assertEquals(self.obj.get_password() is None, True)
+        self.assertEqual(self.obj.get_password() is None, True)
 
         self.obj.name = self.title
         self.obj.set_password('pyavdeskpasswD123')
@@ -874,7 +874,7 @@ class AVDeskStationCheck(unittest.TestCase):
         self.assertEqual(password, 'pyavdeskpasswD123')
 
     def test_tariff_get_set(self):
-        self.assertEquals(self.obj.get_tariff() is None, True)
+        self.assertEqual(self.obj.get_tariff() is None, True)
 
         tariff_group = pyavdesk.AVDeskTariff(AVDESK)
         tariff_group.set_name('Test pyavdesk tariff')
@@ -892,7 +892,7 @@ class AVDeskStationCheck(unittest.TestCase):
         self.assertEqual(tariff_id, tariff_group_id)
 
     def test_grace_period(self):
-        self.assertEquals(self.obj.get_grace_period() is None, True)
+        self.assertEqual(self.obj.get_grace_period() is None, True)
 
         tariff_group = pyavdesk.AVDeskTariff(AVDESK)
         tariff_group.set_name('Test pyavdesk tariff')
@@ -911,41 +911,54 @@ class AVDeskStationCheck(unittest.TestCase):
         self.assertEqual(grace_period, 33)
 
     def test_expires_get_set(self):
-        self.assertEquals(self.obj.get_expires_time() is None, True)
+        self.assertEqual(self.obj.get_expires_time() is None, True)
 
         self.obj.name = self.title
-        self.obj.set_expires_time(1234567)
-        self.assertEqual(self.obj.get_expires_time(), 1234567)
 
+        self.obj.set_expires_time(None)
+        self.assertEqual(self.obj.get_expires_time() is None, True)
         self.obj.create()
-        expires = self.obj.get_expires_time()
+        self.assertEqual(self.obj.get_expires_time() is None, True)
+
+        self.obj.set_expires_time(None)
+        self.obj.update()
+        self.assertEqual(self.obj.get_expires_time() is None, True)
+
+        self.obj.set_expires_time(1582193410)
+        self.assertEqual(self.obj.get_expires_time(), 1582193410)
+        self.obj.update()
+        self.assertEqual(self.obj.get_expires_time(), 1582193410)
         self.obj.delete()
 
-        self.assertEqual(expires, 1234567)
-
     def test_last_seen_time(self):
-        self.assertEquals(self.obj.get_last_seen_time() is None, True)
+        self.assertEqual(self.obj.get_last_seen_time() is None, True)
 
     def test_last_seen_addr(self):
-        self.assertEquals(self.obj.get_last_seen_addr() is None, True)
+        self.assertEqual(self.obj.get_last_seen_addr() is None, True)
 
     def test_block_get_set(self):
 
         blocking = self.obj.get_block_time()
-        self.assertEquals(isinstance(blocking, tuple), True)
-        self.assertEquals(blocking[0] is None, True)
-        self.assertEquals(blocking[1] is None, True)
+        self.assertEqual(isinstance(blocking, tuple), True)
+        self.assertEqual(blocking[0] is None, True)
+        self.assertEqual(blocking[1] is None, True)
 
         self.obj.name = self.title
-        self.obj.set_block_time(1234567, 7654321)
-        blocking = self.obj.get_block_time()
-        self.assertEqual(blocking[0], 1234567)
-        self.assertEqual(blocking[1], 7654321)
-
+        self.obj.set_block_time(None, None)
         self.obj.create()
         blocking = self.obj.get_block_time()
-        self.assertEqual(blocking[0], 1234567)
-        self.assertEqual(blocking[1], 7654321)
+        self.assertEqual(blocking[0] is None, True)
+        self.assertEqual(blocking[1] is None, True)
+
+        self.obj.set_block_time(1582193410, 1582194410)
+        blocking = self.obj.get_block_time()
+        self.assertEqual(blocking[0], 1582193410)
+        self.assertEqual(blocking[1], 1582194410)
+
+        self.obj.update()
+        blocking = self.obj.get_block_time()
+        self.assertEqual(blocking[0], 1582193410)
+        self.assertEqual(blocking[1], 1582194410)
 
         self.obj.set_block_time(0, 0)
         self.obj.update()
@@ -956,13 +969,13 @@ class AVDeskStationCheck(unittest.TestCase):
         self.obj.set_block_time(None, None)
         self.obj.update()
         blocking = self.obj.get_block_time()
-        self.assertEqual(blocking[0], None)
-        self.assertEqual(blocking[1], None)
+        self.assertEqual(blocking[0] is None, True)
+        self.assertEqual(blocking[1] is None, True)
 
         self.obj.delete()
 
     def test_groups(self):
-        self.assertEquals(self.obj.get_groups() >= 0, True)
+        self.assertEqual(self.obj.get_groups() >= 0, True)
 
         group_1 = pyavdesk.AVDeskGroup(AVDESK)
         group_1.name = 'Testing pyavdesk station group 1'
@@ -993,11 +1006,11 @@ class AVDeskRightCheck(unittest.TestCase):
     def test_properties(self):
         everyone = pyavdesk.AVDeskGroup(AVDESK, pyavdesk.META_GROUP_IDS['EVERYONE'])
         rights = everyone.get_av_rights()
-        self.assertEquals(isinstance(rights, list), True)
-        self.assertEquals(isinstance(rights[0], dict), True)
-        self.assertEquals(isinstance(rights[0]['code_text'], str), True)
-        self.assertEquals(isinstance(rights[0]['code'], long), True)
-        self.assertEquals(isinstance(rights[0]['status'], long), True)
+        self.assertEqual(isinstance(rights, list), True)
+        self.assertEqual(isinstance(rights[0], dict), True)
+        self.assertEqual(isinstance(rights[0]['code_text'], str), True)
+        self.assertEqual(isinstance(rights[0]['code'], long), True)
+        self.assertEqual(isinstance(rights[0]['status'], long), True)
 
 
 class AVDeskAdministratorCheck(unittest.TestCase):
@@ -1011,7 +1024,7 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         self.descr_alt = 'This administrator is updated by pyavdesk test script. If it is not removed automatically, that means that something weird has happened.'
 
     def test_handle(self):
-        self.assertEquals(self.obj._handle is None, False)
+        self.assertEqual(self.obj._handle is None, False)
 
     def test_resource_name(self):
         self.assertEqual(self.obj._resource_name, 'admin')
@@ -1020,32 +1033,32 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         self.assertEqual(self.obj._connector, AVDESK)
 
     def test_id_get_set(self):
-        self.assertEquals(self.obj.get_id() is None, True)
+        self.assertEqual(self.obj.get_id() is None, True)
         self.obj.set_id('test_admin')
         self.assertEqual(self.obj.get_id(), 'test_admin')
 
     def test_name_get_set(self):
-        self.assertEquals(self.obj.get_name() is None, True)
+        self.assertEqual(self.obj.get_name() is None, True)
         self.obj.set_name('test_admin_name')
         self.assertEqual(self.obj.get_name(), 'test_admin_name')
 
     def test_last_name_get_set(self):
-        self.assertEquals(self.obj.get_last_name() is None, True)
+        self.assertEqual(self.obj.get_last_name() is None, True)
         self.obj.set_last_name('test_admin_last_name')
         self.assertEqual(self.obj.get_last_name(), 'test_admin_last_name')
 
     def test_last_name_get_set(self):
-        self.assertEquals(self.obj.get_middle_name() is None, True)
+        self.assertEqual(self.obj.get_middle_name() is None, True)
         self.obj.set_middle_name('test_admin_middle_name')
         self.assertEqual(self.obj.get_middle_name(), 'test_admin_middle_name')
 
     def test_description_get_set(self):
-        self.assertEquals(self.obj.get_description() is None, True)
+        self.assertEqual(self.obj.get_description() is None, True)
         self.obj.set_description('test_admin_descr')
         self.assertEqual(self.obj.get_description(), 'test_admin_descr')
 
     def test_password_get_set(self):
-        self.assertEquals(self.obj.get_password() is None, True)
+        self.assertEqual(self.obj.get_password() is None, True)
         self.obj.set_password('test_admin_passwd')
         self.assertEqual(self.obj.get_password(), 'test_admin_passwd')
 
@@ -1057,8 +1070,8 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         self.assertEqual(self.obj.get_readonly(), False)
 
     def test_get_time_created_modified(self):
-        self.assertEquals(self.obj.get_time_created() is None, True)
-        self.assertEquals(self.obj.get_time_modified() is None, True)
+        self.assertEqual(self.obj.get_time_created() is None, True)
+        self.assertEqual(self.obj.get_time_modified() is None, True)
 
         self.obj.name = self.title
         self.obj.login = self.login
@@ -1067,8 +1080,8 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         created = self.obj.get_time_created()
         modified = self.obj.get_time_modified()
         self.obj.delete()
-        self.assertEquals(created is None, False)
-        self.assertEquals(modified is None, False)
+        self.assertEqual(created is None, False)
+        self.assertEqual(modified is None, False)
 
     def test_create_update_delete(self):
         self.obj.login = self.login
@@ -1077,7 +1090,7 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         result = self.obj.create()
 
         self.assertEqual(result, True)
-        self.assertEquals(self.obj.id is None, False)
+        self.assertEqual(self.obj.id is None, False)
         self.assertEqual(self.obj.name,  self.title)
 
         new_description = self.descr_alt
@@ -1108,7 +1121,7 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         self.assertTrue(deleted)
 
     def test_groups(self):
-        self.assertEquals(self.obj.get_groups() >= 0, True)
+        self.assertEqual(self.obj.get_groups() >= 0, True)
         self.assertFalse(self.obj.type_is_global_admin())
         self.assertFalse(self.obj.type_is_group_admin())
 
@@ -1144,10 +1157,10 @@ class AVDeskAdministratorCheck(unittest.TestCase):
 
         try:
             self.assertEqual(groups, [group_1_id, group_2_id])
-        except AssertionError as e:
-            # For AV-Desk 6.2 handling only one group per administrator.
+        except AssertionError:
+            # AV-Desk 6.2 handles only one group per administrator.
             self.assertEqual(groups, [group_1_id,])
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
