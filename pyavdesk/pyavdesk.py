@@ -1898,7 +1898,7 @@ class AVDeskStation(_AVDeskCommon, _AVDeskGroupable, _AVDeskShared):
 
     def get_expires_time(self):
         expires = self._api_call('expires_time', (self._get_handle(),), restype=time_t)
-        if expires == VAR_UINITIALIZED_NUM:
+        if expires == VAR_UINITIALIZED_NUM or expires == VAR_RESET:
             return None
         return expires
 
@@ -2183,10 +2183,10 @@ class AVDeskStation(_AVDeskCommon, _AVDeskGroupable, _AVDeskShared):
 
         """
         begins_at = self._api_call('block_time_begin', (self._get_handle(),), restype=time_t)
-        if begins_at == VAR_UINITIALIZED_NUM:
+        if begins_at == VAR_UINITIALIZED_NUM or begins_at == VAR_RESET:
             begins_at = None
         finishes_at = self._api_call('block_time_end', (self._get_handle(),), restype=time_t)
-        if finishes_at == VAR_UINITIALIZED_NUM:
+        if finishes_at == VAR_UINITIALIZED_NUM or finishes_at == VAR_RESET:
             finishes_at = None
         return begins_at, finishes_at
 
