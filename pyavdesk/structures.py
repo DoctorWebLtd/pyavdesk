@@ -20,7 +20,8 @@ import logging
 
 time_t = ctypes.c_long
 if sys.platform == 'win32':
-    time_t = ctypes.c_int64
+    # Since 2.1 libdwavdapi defines time_t as 32 for compatibility reasons.
+    time_t = ctypes.c_int32
 
 
 class AVDStruct(ctypes.Structure):
