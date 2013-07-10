@@ -226,12 +226,14 @@ class StructBase(AVDStruct):
         ('viruses', ctypes.c_uint),
     ]
 
+
 class StructPackage(AVDStruct):
     """Holds AV-Desk antivirus agent packages information."""
     _fields_ = [
         ('url', ctypes.c_char_p),
         ('type', ctypes.c_uint),
         ]
+
 
 class StructHistory(AVDStruct):
     """Holds AV-Desk station history information."""
