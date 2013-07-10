@@ -1069,6 +1069,49 @@ class AVDeskAdministratorCheck(unittest.TestCase):
         self.obj.set_readonly(False)
         self.assertEqual(self.obj.get_readonly(), False)
 
+        self.obj.name = self.title
+        self.obj.login = self.login
+        self.obj.save()
+        self.assertEqual(self.obj.get_readonly(), False)
+
+        self.obj.set_readonly(True)
+        self.obj.save()
+        self.assertEqual(self.obj.get_readonly(), True)
+
+        self.obj.set_readonly(False)
+        self.obj.save()
+        self.assertEqual(self.obj.get_readonly(), False)
+
+        self.obj.delete()
+
+    def test_restrictions_get_set(self):
+        self.assertFalse(self.obj.get_restrictions())
+        self.obj.set_restrictions(True)
+        self.assertEqual(self.obj.get_restrictions(), True)
+        self.obj.set_restrictions(False)
+        self.assertEqual(self.obj.get_restrictions(), False)
+
+        group_1 = pyavdesk.AVDeskGroup(AVDESK)
+        group_1.name = 'Testing pyavdesk group admin restictions'
+        group_1.save()
+
+        self.obj.name = self.title
+        self.obj.login = self.login
+        self.obj.add_to_groups([group_1])
+        self.obj.save()
+        self.assertEqual(self.obj.get_restrictions(), False)
+
+        self.obj.set_restrictions(True)
+        self.obj.save()
+        self.assertEqual(self.obj.get_restrictions(), True)
+
+        self.obj.set_restrictions(False)
+        self.obj.save()
+        self.assertEqual(self.obj.get_restrictions(), False)
+
+        self.obj.delete()
+        group_1.delete()
+
     def test_get_time_created_modified(self):
         self.assertEqual(self.obj.get_time_created() is None, True)
         self.assertEqual(self.obj.get_time_modified() is None, True)

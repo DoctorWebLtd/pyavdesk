@@ -2251,6 +2251,12 @@ class AVDeskAdmin(_AVDeskCommon, _AVDeskGroupable):
     def set_readonly(self, value):
         self._api_call('set_readonly', (self._get_handle(), bool(value)))
 
+    def set_restrictions(self, value):
+        self._api_call('set_limited_rights', (self._get_handle(), bool(value)))
+
+    def get_restrictions(self):
+        return bool(self._lib_call(self._api_func_name('has_limited_rights'), (self._get_handle(),), restype=ctypes.c_uint))
+
     def get_readonly(self):
         return self._lib_call(self._api_func_name('is_readonly'), (self._get_handle(),), restype=ctypes.c_bool)
 
@@ -2268,6 +2274,10 @@ class AVDeskAdmin(_AVDeskCommon, _AVDeskGroupable):
     middle_name = property(get_middle_name, set_middle_name)
     #: This *property* is used to get or set administarator password.
     password = property(get_password, set_password)
+    #: This *property* is used to get or set restrictions for an administrator.
+    #: Some operations on stations (e.g. changing expires, block period, parent group) will be restricted if True is passed.
+    #: NOTE: This applies only to group administrators.
+    restrictions = property(get_restrictions, set_restrictions)
     #: This *property* is used to get or set administarator readonly boolean restriction flag.
     #: If readonly flag is set to True administrator would be unable to perform create/update/delete actions on server resources.
     readonly = property(get_readonly, set_readonly)
