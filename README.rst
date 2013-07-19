@@ -6,23 +6,34 @@ simple yet powerful interface to manipulate Dr.Web AV-Desk server resources from
 Python code, making integration of third-party applications with AV-Desk as easy as possible.
 
 
+
 Requirements
 ------------
 
 * Python 2.6+
 * Dr.Web AV-Desk - http://ru.av-desk.com/support/demo/?lng=en
 * Dr.Web *dwavdapi* library - http://download.geo.drweb.com/pub/drweb/avd/libs/libdwavdapi/
-* Python setuptools (to install pyavdesk package using setup.py)
+* PIP or setuptools (to install pyavdesk package)
+
 
 
 Installation
 ------------
 
-Execute from command line:
+Execute from the command line:
+
+    > pip install pyavdesk
+
+Note: this command requires python-pip package to be installed in advance.
+
+OR
+
+Execute from the command line:
 
     > python setup.py install
 
 Note: this command requires python-setuptools package to be installed in advance.
+
 
 
 Documentation
