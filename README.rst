@@ -59,3 +59,9 @@ with the source code.
 http://www.drweb.com
 
 http://www.av-desk.com
+
+
+
+.. image:: https://d2weczhvl823v0.cloudfront.net/DoctorWebLtd/pyavdesk/trend.png
+        :target: https://bitdeli.com/free
+
