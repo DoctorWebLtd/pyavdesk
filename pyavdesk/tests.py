@@ -1084,6 +1084,36 @@ class AVDeskAdministratorCheck(unittest.TestCase):
 
         self.obj.delete()
 
+    def test_right_create_admin_get_set(self):
+
+        grp = pyavdesk.AVDeskGroup(AVDESK)
+        grp.name = 'Тестовая pyavdesk группа (%s)' % get_microtime()
+        grp.save()
+
+        self.obj.add_to_groups([grp,])
+
+        self.assertTrue(self.obj.get_right_create_admins())
+        self.obj.set_right_create_admins(True)
+        self.assertEqual(self.obj.get_right_create_admins(), True)
+        self.obj.set_right_create_admins(False)
+        self.assertEqual(self.obj.get_right_create_admins(), False)
+
+        self.obj.name = self.title
+        self.obj.login = self.login
+        self.obj.save()
+        self.assertEqual(self.obj.get_readonly(), False)
+
+        self.obj.set_right_create_admins(True)
+        self.obj.save()
+        self.assertEqual(self.obj.get_right_create_admins(), True)
+
+        self.obj.set_right_create_admins(False)
+        self.obj.save()
+        self.assertEqual(self.obj.get_right_create_admins(), False)
+
+        self.obj.delete()
+        grp.delete()
+
     def test_restrictions_get_set(self):
         self.assertFalse(self.obj.get_restrictions())
         self.obj.set_restrictions(True)
