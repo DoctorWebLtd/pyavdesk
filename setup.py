@@ -16,7 +16,6 @@ setup(
     url='http://www.drweb.com',
     packages=['pyavdesk'],
     include_package_data=True,
-    install_requires=['setuptools'],
     zip_safe=False,
     classifiers=[
         'Development Status :: 4 - Beta',
